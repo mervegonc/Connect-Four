@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from "react";
 import "../style.css";
 
-export default function GameScreen() {
+const GameScreen = () => {
   const [board, setBoard] = useState([
     ["", "", "", "", "", "", ""],
     ["", "", "", "", "", "", ""],
@@ -38,7 +39,7 @@ export default function GameScreen() {
   }, []);
 
   const handleSquareClick = (rowIdx, colIdx) => {
-    if (!isWinner) {
+    if (!isWinner && currentPlayer === "X") {
       makeMove(rowIdx, colIdx);
     }
   };
@@ -78,10 +79,39 @@ export default function GameScreen() {
       if (newBoard[i][colIdx] === "") {
         newBoard[i][colIdx] = currentPlayer;
         setBoard(newBoard);
-        setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+        const nextPlayer = currentPlayer === "X" ? "O" : "X";
+        
+        setCurrentPlayer(nextPlayer); // currentPlayer'ı güncelle
         checkWinner(i, colIdx, currentPlayer, newBoard);
+        
         break;
       }
+    }
+  };
+  
+
+  useEffect(() => {
+    if (currentPlayer === 'O' && !isWinner) {
+      makeComputerMove();
+    }
+  }, [currentPlayer, isWinner]);
+
+  const makeComputerMove = () => {
+    // Burada bilgisayarın hamlesini yapacak algoritmayı yazabilirsiniz
+    // Örnek bir algoritma: rastgele boş bir kareye hamle yapma
+    const emptySquares = [];
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        if (cell === "") {
+          emptySquares.push([rowIndex, colIndex]);
+        }
+      });
+    });
+
+    if (emptySquares.length > 0) {
+      const randomIndex = Math.floor(Math.random() * emptySquares.length);
+      const [rowIdx, colIdx] = emptySquares[randomIndex];
+      makeMove(rowIdx, colIdx);
     }
   };
 
@@ -95,15 +125,11 @@ export default function GameScreen() {
               return (
                 <div className="cf-item" style={{ backgroundColor: boardColor }} key={colIdx + "" + rowIdx} onClick={() => handleSquareClick(rowIdx, colIdx)}>
                   {board[rowIdx][colIdx] === "X" ? (
-                    <div className="cf-token-X" style={{ backgroundColor: "black" }}>
-                      {userName}
-                    </div>
+                    <div className="cf-token-X" style={{ backgroundColor: userColor }}></div>
                   ) : (
                     <>
                       {board[rowIdx][colIdx] === "O" ? (
-                        <div className="cf-token-O"  style={{ backgroundColor: userColor }}>
-                          {userName}
-                        </div>
+                        <div className="cf-token-O" style={{ backgroundColor: "black" }}></div>
                       ) : (
                         <div></div>
                       )}
@@ -121,18 +147,17 @@ export default function GameScreen() {
   return (
     <div className="main-Page-Container">
       <div className="current-player-container">
-        <h1>{gameName}</h1>
-        <h2>{userName}</h2>
-        <h3>Current Player is</h3>
-        <div className={"cf-token-" + currentPlayer}></div>
+        {!isWinner && <h2>{currentPlayer === "X" ? userName : "Computer"}</h2>}
       </div>
       {renderBoard()}
       {isWinner && (
         <div className="current-player-container">
-          <h3>The Winner is</h3>
-          <div className={"cf-token-" + (currentPlayer === "X" ? "O" : "X")}></div>
+          <h3>The Winner is {isWinner === "O" ? "Computer" : userName}</h3>
         </div>
       )}
     </div>
   );
-}
+  
+      }
+
+export default GameScreen;

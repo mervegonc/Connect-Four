@@ -25,6 +25,8 @@ const GameCreationScreen = ({ onGameCreate }) => {
     };
     localStorage.setItem('boardColor', boardColor);
     localStorage.setItem('userColor',userColor);
+    localStorage.setItem('userName',userName);
+    localStorage.setItem('gameName',gameName);
 
     // Yeni oyunu diğer oyunlarla birlikte kaydet
     const updatedGames = [...games, newGame];
