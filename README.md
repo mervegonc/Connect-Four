@@ -1,1 +1,55 @@
-Connect-Four ConnectFour Game This project is a simple implementation of the classic ConnectFour game using React. It consists of several components that enable users to create games, view a list of created games, and play ConnectFour against another player or against a computer opponent. Components: GameCreationScreen: Allows users to create a new ConnectFour game. Features input fields for: Gamer Name: Enter the player's name. Gamer Color: Choose the player's token color. Game Name: Enter a name for the game. Game Color: Choose the color for the game board. Users must fill in all fields before creating the game. Upon game creation, the details are stored locally, and the parent component is informed. GameListScreen: Displays a list of created games with their details. Allows users to start playing a selected game. Retrieves stored games from local storage and updates the list accordingly. GameScreen: The main screen where the ConnectFour game is played. Displays the game board and current player's turn. Players can make moves by clicking on the squares. Ends the game when a player wins or the board is full. ConnectFourSquare Component: Represents each square in the ConnectFour game board. Handles move logic and checks for a winner. Allows customization of token colors based on player's choice. How to Run: Clone the repository to your local machine. Navigate to the project directory. Install dependencies using npm install. Start the development server with npm start. Open http://localhost:3000 to view the app in your browser. Technologies Used: React: JavaScript library for building user interfaces. HTML/CSS: Markup and styling for the user interface. Local Storage: For storing game data locally. JavaScript: Programming language used for application logic. Contributors: Your Name - Lead Developer Contributor 1 - UI/UX Designer Contributor 2 - QA Tester License: This project is licensed under the MIT License.
+Connect Four Game
+Connect Four Game, kullanıcıların tarayıcı üzerinden oynayabileceği bir oyundur. Bu README dosyası, projenin nasıl kurulacağı, nasıl kullanılacağı ve katkıda bulunulabileceği hakkında bilgi içermektedir.
+
+İçindekiler
+Kurulum
+Kullanım
+Geliştirme
+Katılım
+Lisans
+Kurulum
+Proje, Node.js ve npm (Node Package Manager) gerektirir. Yerel bir kopya oluşturmak için aşağıdaki adımları izleyin:
+
+Bu deposunu yerel makinenize klonlayın:
+
+bash
+Copy code
+git clone <repository-link>
+Proje dizinine gidin:
+
+bash
+Copy code
+cd connect-four-game
+Bağımlılıkları yükleyin:
+
+bash
+Copy code
+npm install
+Uygulamayı başlatın:
+
+bash
+Copy code
+npm start
+Tarayıcınızda http://localhost:3000 adresine giderek uygulamayı görüntüleyebilirsiniz.
+
+Kullanım
+Connect Four Game'i kullanarak şu işlemleri gerçekleştirebilirsiniz:
+
+Oyun Oluşturma: Ana sayfada bulunan "Create Game" butonuna tıklayarak yeni bir oyun oluşturabilirsiniz. Kullanıcı adı, kullanıcı rengi, oyun adı ve oyun rengi alanlarını doldurarak yeni bir oyun başlatabilirsiniz. Aynı kullanıcı adıyla birden fazla oyun oluşturulamaz.
+
+Oyunları Görüntüleme: Ana sayfada bulunan "Start Game" butonuna tıklayarak mevcut oyunları görüntüleyebilirsiniz. Bu sayfada mevcut olan oyunların bilgilerini görebilirsiniz: oyun adı, kullanıcı adı, oyun rengi ve kullanıcı rengi.
+
+Oyun Oynama: Oyun listesi ekranında, bir oyunu başlatmak için ilgili oyunun üzerine tıklayın. Oyun ekranında, sıranız geldiğinde kendi hamlenizi yapın. Oyun tahtasında dörtünüzü yan yana getirmeyi başaran ilk oyuncu kazanır.
+
+Geliştirme
+Bu projenin geliştirilmesine katkıda bulunmak için aşağıdaki adımları izleyebilirsiniz:
+
+Mevcut bir issue varsa veya yeni bir özellik eklemek istiyorsanız, bir [issue](<project-url>/issues) açın.
+Kodunuzu geliştirin ve değişiklikleri yapın.
+Değişikliklerinizi test edin ve kodunuzu kontrol edin.
+Bir [Pull Request](<project-url>/pulls) gönderin ve değişikliklerinizi ekleyin.
+Katılım
+Projeye katkıda bulunmak isterseniz, lütfen GitHub üzerinden [issue](<project-url>/issues) açarak veya bir [Pull Request](<project-url>/pulls) göndererek katkıda bulunun. Tüm katılımlarınızı memnuniyetle karşılarız.
+
+Lisans
+Bu proje MIT lisansı altında lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasını inceleyin.
