@@ -96,9 +96,8 @@ const GameScreen = () => {
     }
   }, [currentPlayer, isWinner]);
 
-  const makeComputerMove = () => {
-    // Burada bilgisayarın hamlesini yapacak algoritmayı yazabilirsiniz
-    // Örnek bir algoritma: rastgele boş bir kareye hamle yapma
+const makeComputerMove = () => {
+  setTimeout(() => {
     const emptySquares = [];
     board.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
@@ -113,7 +112,8 @@ const GameScreen = () => {
       const [rowIdx, colIdx] = emptySquares[randomIndex];
       makeMove(rowIdx, colIdx);
     }
-  };
+  }, 500); // 0.5 saniye bekletme
+};
 
   const renderBoard = () => {
     return (
