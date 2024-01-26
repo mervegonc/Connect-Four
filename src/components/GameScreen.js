@@ -17,6 +17,7 @@ const GameScreen = () => {
   const [userColor, setUserColor] = useState("#000000");
   const [userName, setUserName] = useState("");
   const [gameName, setGameName] = useState("");
+  const [winners, setWinners] = useState([]);
 
   useEffect(() => {
     const storedBoardColor = localStorage.getItem('boardColor');
@@ -36,6 +37,10 @@ const GameScreen = () => {
     if (storedGameName) {
       setGameName(storedGameName);
     }
+
+    // Load winners from localStorage
+    const storedWinners = JSON.parse(localStorage.getItem('winners')) || [];
+    setWinners(storedWinners);
   }, []);
 
   const handleSquareClick = (rowIdx, colIdx) => {
@@ -60,7 +65,17 @@ const GameScreen = () => {
       count += checkDirection(row - deltaRow, col - deltaCol, player, -deltaRow, -deltaCol, board);
 
       if (count >= 4) {
-        setIsWinner(true);
+        setIsWinner(player);
+        const winnerInfo = {
+          userName: userName,
+          gameName: gameName,
+          winnerName: player,
+          winnerColor: userColor
+        };
+        if (player !== "O") {
+          setWinners(prevWinners => [...prevWinners, winnerInfo]);
+          localStorage.setItem('winners', JSON.stringify([...winners, winnerInfo]));
+        }
         break;
       }
     }
@@ -80,15 +95,14 @@ const GameScreen = () => {
         newBoard[i][colIdx] = currentPlayer;
         setBoard(newBoard);
         const nextPlayer = currentPlayer === "X" ? "O" : "X";
-        
-        setCurrentPlayer(nextPlayer); // currentPlayer'ı güncelle
+
+        setCurrentPlayer(nextPlayer); // Update currentPlayer
         checkWinner(i, colIdx, currentPlayer, newBoard);
-        
+
         break;
       }
     }
   };
-  
 
   useEffect(() => {
     if (currentPlayer === 'O' && !isWinner) {
@@ -96,24 +110,24 @@ const GameScreen = () => {
     }
   }, [currentPlayer, isWinner]);
 
-const makeComputerMove = () => {
-  setTimeout(() => {
-    const emptySquares = [];
-    board.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
-        if (cell === "") {
-          emptySquares.push([rowIndex, colIndex]);
-        }
+  const makeComputerMove = () => {
+    setTimeout(() => {
+      const emptySquares = [];
+      board.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+          if (cell === "") {
+            emptySquares.push([rowIndex, colIndex]);
+          }
+        });
       });
-    });
 
-    if (emptySquares.length > 0) {
-      const randomIndex = Math.floor(Math.random() * emptySquares.length);
-      const [rowIdx, colIdx] = emptySquares[randomIndex];
-      makeMove(rowIdx, colIdx);
-    }
-  }, 500); // 0.5 saniye bekletme
-};
+      if (emptySquares.length > 0) {
+        const randomIndex = Math.floor(Math.random() * emptySquares.length);
+        const [rowIdx, colIdx] = emptySquares[randomIndex];
+        makeMove(rowIdx, colIdx);
+      }
+    }, 500); // Wait for 0.5 seconds
+  };
 
   const renderBoard = () => {
     return (
@@ -143,7 +157,7 @@ const makeComputerMove = () => {
       </div>
     );
   };
-  
+
   return (
     <div className="main-Page-Container">
       <div className="current-player-container">
@@ -152,12 +166,11 @@ const makeComputerMove = () => {
       {renderBoard()}
       {isWinner && (
         <div className="current-player-container">
-          <h3>The Winner is {isWinner === "O" ? "Computer" : userName}</h3>
+          {isWinner !== "O" ? <h3>The Winner is {isWinner === "O" ? "Computer" : userName}</h3> : <h3>The Winner is Computer</h3>}
         </div>
       )}
     </div>
   );
-  
-      }
+};
 
 export default GameScreen;
