@@ -14,9 +14,10 @@ const GameListScreen = ({ onStartGame }) => {
       <button onClick={() => onStartGame(games)}>Start Game</button>
       {games.map((game, index) => (
         <div key={index}>
-          <p>Game Name: {game.userName}</p>
           <p>Game Name: {game.gameName}</p>
+          <p>User Name: {game.userName}</p>
           <p>Game Color: {game.boardColor}</p>
+          <p>User Color: {game.userColor}</p>
         </div>
       ))}
     </div>

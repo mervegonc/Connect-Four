@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "../style.css";
 
@@ -14,11 +13,27 @@ export default function GameScreen() {
   const [currentPlayer, setCurrentPlayer] = useState("X");
   const [isWinner, setIsWinner] = useState(false);
   const [boardColor, setBoardColor] = useState("#000000"); // Default color
+  const [userColor, setUserColor] = useState("#000000");
+  const [userName, setUserName] = useState("");
+  const [gameName, setGameName] = useState("");
 
   useEffect(() => {
     const storedBoardColor = localStorage.getItem('boardColor');
+    const storedUserColor = localStorage.getItem('userColor');
+    const storedUserName = localStorage.getItem("userName");
+    const storedGameName = localStorage.getItem('gameName');
+
     if (storedBoardColor) {
       setBoardColor(storedBoardColor);
+    }
+    if (storedUserColor) {
+      setUserColor(storedUserColor);
+    }
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+    if (storedGameName) {
+      setGameName(storedGameName);
     }
   }, []);
 
@@ -72,40 +87,49 @@ export default function GameScreen() {
 
   const renderBoard = () => {
     return (
-      <div className="cf-Container" style={{ backgroundColor: "white" }}>
-        {board.map((row, rowIdx) => {
-          return row.map((_, colIdx) => {
-            return (
-              <div className="cf-item" style={{ backgroundColor: boardColor }} key={colIdx + "" + rowIdx} onClick={() => handleSquareClick(rowIdx, colIdx)}>
-                {board[rowIdx][colIdx] === "X" ? (
-                  <div className="cf-token-X"></div>
-                ) : (
-                  <>
-                    {board[rowIdx][colIdx] === "O" ? (
-                      <div className="cf-token-O"></div>
-                    ) : (
-                      <div></div>
-                    )}
-                  </>
-                )}
-              </div>
-            );
-          });
-        })}
+      <div>
+        <h1 style={{ color: "black" }}>{gameName}</h1>
+        <div className="cf-Container" style={{ backgroundColor: "white" }}>
+          {board.map((row, rowIdx) => {
+            return row.map((_, colIdx) => {
+              return (
+                <div className="cf-item" style={{ backgroundColor: boardColor }} key={colIdx + "" + rowIdx} onClick={() => handleSquareClick(rowIdx, colIdx)}>
+                  {board[rowIdx][colIdx] === "X" ? (
+                    <div className="cf-token-X" style={{ backgroundColor: "black" }}>
+                      {userName}
+                    </div>
+                  ) : (
+                    <>
+                      {board[rowIdx][colIdx] === "O" ? (
+                        <div className="cf-token-O"  style={{ backgroundColor: userColor }}>
+                          {userName}
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            });
+          })}
+        </div>
       </div>
     );
   };
-
+  
   return (
     <div className="main-Page-Container">
       <div className="current-player-container">
-        <h1>Current Player is</h1>
+        <h1>{gameName}</h1>
+        <h2>{userName}</h2>
+        <h3>Current Player is</h3>
         <div className={"cf-token-" + currentPlayer}></div>
       </div>
       {renderBoard()}
       {isWinner && (
         <div className="current-player-container">
-          <h1>The Winner is</h1>
+          <h3>The Winner is</h3>
           <div className={"cf-token-" + (currentPlayer === "X" ? "O" : "X")}></div>
         </div>
       )}

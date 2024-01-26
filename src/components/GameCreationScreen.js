@@ -38,12 +38,12 @@ const GameCreationScreen = ({ onGameCreate }) => {
     <div>
       <h2>Game Creation Screen</h2>
       <label>
-        Gamer Name:
+       User Name:
         <input type="text" value={userName} onChange={(e) => setuserName(e.target.value)} />
       </label>
       <br />
       <label>
-        Gamer Color:
+        User Color:
         <input type="color" value={userColor} onChange={(e) => setuserColor(e.target.value)} />
       </label>
       <br />

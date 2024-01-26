@@ -38,7 +38,7 @@ h1{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:green;
+   
 }
 
 @keyframes gradient {
@@ -54,14 +54,14 @@ h1{
 }
 
 .cf-token-O{
-    background-color: #e73c7e;
+    
     border-radius: 50%;
     width: 4vw;
     height: 4vw;
 }
 
 .cf-token-X{
-    background-color: #23a6d5;
+   
     border-radius: 50%;
     width: 4vw;
     height: 4vw;

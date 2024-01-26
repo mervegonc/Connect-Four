@@ -27,6 +27,8 @@ const App = () => {
           <GameListScreen
             gameName={localStorage.getItem('gameName')}
             boardColor={localStorage.getItem('boardColor')}
+            userName={localStorage.getItem('userName')}
+            userColor={localStorage.getItem('userColor')}
             onStartGame={handleStartGame}
           />
         )
