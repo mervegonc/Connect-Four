@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 const GameCreationScreen = ({ onGameCreate }) => {
-  const [userName, setuserName] = useState('');
-  const [userColor, setuserColor] = useState('#000000'); // varsayılan renk
+  const [userName, setUserName] = useState('');
+  const [userColor, setUserColor] = useState('#000000'); // varsayılan renk
   const [gameName, setGameName] = useState('');
-  const [boardColor, setboardColor] = useState('#000000'); // varsayılan renk
+  const [boardColor, setBoardColor] = useState('#000000'); // varsayılan renk
 
   const handleCreateGame = () => {
     // Kullanıcı adı, kullanıcı rengi, oyun adı ve oyun rengi boş olmamalı
@@ -16,6 +16,13 @@ const GameCreationScreen = ({ onGameCreate }) => {
     // Daha önce kaydedilmiş oyunları al
     const games = JSON.parse(localStorage.getItem('games')) || [];
 
+    // Aynı kullanıcı adına sahip bir oyun var mı kontrol et
+    const existingUserGame = games.find(game => game.userName === userName);
+    if (existingUserGame) {
+      alert("A game with the same user name already exists. Please choose a different user name.");
+      return;
+    }
+
     // Yeni oyunu oluştur
     const newGame = {
       userName: userName,
@@ -23,14 +30,14 @@ const GameCreationScreen = ({ onGameCreate }) => {
       gameName: gameName,
       boardColor: boardColor
     };
-    localStorage.setItem('boardColor', boardColor);
-    localStorage.setItem('userColor',userColor);
-    localStorage.setItem('userName',userName);
-    localStorage.setItem('gameName',gameName);
 
     // Yeni oyunu diğer oyunlarla birlikte kaydet
     const updatedGames = [...games, newGame];
     localStorage.setItem('games', JSON.stringify(updatedGames));
+    localStorage.setItem('boardColor', boardColor);
+    localStorage.setItem('userColor', userColor);
+    localStorage.setItem('userName', userName);
+    localStorage.setItem('gameName', gameName);
 
     // Oyun oluşturulduğunda parent component'a bilgi iletilir.
     onGameCreate();
@@ -41,12 +48,12 @@ const GameCreationScreen = ({ onGameCreate }) => {
       <h2>Game Creation Screen</h2>
       <label>
        User Name:
-        <input type="text" value={userName} onChange={(e) => setuserName(e.target.value)} />
+        <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
       </label>
       <br />
       <label>
         User Color:
-        <input type="color" value={userColor} onChange={(e) => setuserColor(e.target.value)} />
+        <input type="color" value={userColor} onChange={(e) => setUserColor(e.target.value)} />
       </label>
       <br />
       <label>
@@ -56,7 +63,7 @@ const GameCreationScreen = ({ onGameCreate }) => {
       <br />
       <label>
         Game Color:
-        <input type="color" value={boardColor} onChange={(e) => setboardColor(e.target.value)} />
+        <input type="color" value={boardColor} onChange={(e) => setBoardColor(e.target.value)} />
       </label>
       <br />
       <button onClick={handleCreateGame}>Create Game</button>
